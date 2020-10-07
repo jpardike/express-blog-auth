@@ -40,7 +40,7 @@
 
       <ul>
         <% author.articles.forEach((article) => { %>
-          <a href=""><li><%= article.title %></li></a>
+          <a href="/articles/<%= article.id %>"><li><%= article.title %></li></a>
         <% }) %>
       </ul>
 

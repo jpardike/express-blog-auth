@@ -35,8 +35,6 @@ router.get('/:authorId', (req, res) => {
     .populate('articles')
     .exec((err, foundAuthor) => {
       if (err) return console.log(err);
-  
-      console.log('foundAuthor:', foundAuthor);
 
       const context = {
         author: foundAuthor,
@@ -99,8 +97,12 @@ router.delete('/:authorId', (req, res) => {
   db.Author.findByIdAndDelete(req.params.authorId, (err, deletedAuthor) => {
     if (err) return console.log(err);
 
-    // Redirect to index route
-    res.redirect('/authors');
+    db.Article.deleteMany({_id: { $in: deletedAuthor.articles }}, (err) => {
+      if (err) return console.log(err);
+
+      // Redirect to index route
+      res.redirect('/authors');
+    })
   });
 });
 

@@ -79,10 +79,22 @@ router.get('/:articleId/edit', (req, res) => {
 
 // DELETE destroy
 router.delete('/:articleId', (req, res) => {
-  db.Article.findByIdAndDelete(req.params.articleId, (err) => {
+  const articleId = req.params.articleId;
+
+  db.Article.findByIdAndDelete(articleId, (err) => {
     if (err) return console.log(err);
 
-    res.redirect('/articles');
+    db.Author.findOne({'articles': articleId}, (err, foundAuthor) => {
+      if (err) return console.log(err);
+
+      foundAuthor.articles.remove(articleId);
+      foundAuthor.save((err, updatedAuthor) => {
+        if (err) return console.log(err);
+
+        res.redirect('/articles');
+      })
+    })
+
   });
 });
 
