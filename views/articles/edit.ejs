@@ -6,28 +6,7 @@
   <title>Edit Article</title>
 </head>
 <body>
-  <header>
-    <h1>Express Blog</h1>
-    <nav>
-      <ul>
-        <li>
-          <a href="/">Home</a>
-        </li>
-        <li>
-          <a href="/authors">Author Index</a>
-        </li>
-        <li>
-          <a href="/authors/new">Add New Author</a>
-        </li>
-        <li>
-          <a href="/articles">Articles Index</a>
-        </li>
-        <li>
-          <a href="/articles/new">Add New Articles</a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <%- include('../partials/header') %>
 
   <main>
     <h2>Edit Info for Article: <%=article.title%></h2>
