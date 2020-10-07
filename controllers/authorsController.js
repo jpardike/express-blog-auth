@@ -31,15 +31,19 @@ router.get('/new', (req, res) => {
 // GET SHOW
 router.get('/:authorId', (req, res) => {
   // Query DB for author by ID
-  db.Author.findById(req.params.authorId, (err, foundAuthor) => {
-    if (err) return console.log(err);
+  db.Author.findById(req.params.authorId)
+    .populate('articles')
+    .exec((err, foundAuthor) => {
+      if (err) return console.log(err);
+  
+      console.log('foundAuthor:', foundAuthor);
 
-    const context = {
-      author: foundAuthor,
-    };
-
-    res.render('authors/show', context);
-  });
+      const context = {
+        author: foundAuthor,
+      };
+  
+      res.render('authors/show', context);
+    });
 });
 
 

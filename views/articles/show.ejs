@@ -30,7 +30,7 @@
   </header>
 
   <h2><%= title %></h2>
-
+  <a href="/authors/<%= author.id %>"><p><%= author.name %></p></a>
   <p><%= body %></p>
 
   <form action="/articles/<%= id %>?_method=DELETE" method="POST">

@@ -8,6 +8,10 @@ const articleSchema = new mongoose.Schema({
   body: {
     type: String,
     required: true
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Author'
   }
 }, {timestamps: true});
 

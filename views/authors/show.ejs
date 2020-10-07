@@ -37,6 +37,13 @@
       <ul>
         <li>Name: <%= author.name %></li>
       </ul>
+
+      <ul>
+        <% author.articles.forEach((article) => { %>
+          <a href=""><li><%= article.title %></li></a>
+        <% }) %>
+      </ul>
+
     </section>
     <section>
       <a href="/authors/<%= author._id %>/edit">

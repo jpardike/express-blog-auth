@@ -21,16 +21,28 @@ router.get('/', (req, res) => {
 
 // GET new
 router.get('/new', (req, res) => {
-  res.render('articles/new');
+  db.Author.find({}, (err, allAuthors) => {
+    if (err) return console.log(err);
+
+    const context = {
+      authors: allAuthors
+    };
+
+    res.render('articles/new', context);
+  });
 });
 
 // GET show
 router.get('/:articleId', (req, res) => {
-  db.Article.findById(req.params.articleId, (err, articleById) => {
-    if (err) return console.log(err);
-    
-    res.render('articles/show', articleById);
-  })
+  db.Article.findById(req.params.articleId)
+    .populate('author')
+    .exec((err, articleById) => {
+      if (err) return console.log(err);
+
+      console.log('articleById:', articleById);
+      
+      res.render('articles/show', articleById);
+    });
 });
 
 // POST create
@@ -38,7 +50,17 @@ router.post('/', (req, res) => {
   db.Article.create(req.body, (err, newArticle) => {
     if (err) return console.log(err);
 
-    res.redirect(`/articles/${newArticle.id}`);
+    db.Author.findById(req.body.author, (err, foundAuthor) => {
+      if (err) return console.log(err);
+
+      foundAuthor.articles.push(newArticle._id);
+      foundAuthor.save((err, savedAuthor) => {
+        if (err) return console.log(err);
+
+        res.redirect(`/articles/${newArticle.id}`);
+      })
+    })
+
   });
 });
 
