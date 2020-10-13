@@ -18,6 +18,9 @@ app.set('view engine', 'ejs');
 const ctrl = require('./controllers');
 
 // -------------------------- MIDDLEWARE
+// Server Static Assets (JS, CSS, Images)
+app.use(express.static(`${__dirname}/public`));
+
 // Body Parser - puts request data on req.body
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
