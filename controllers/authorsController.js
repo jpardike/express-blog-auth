@@ -24,6 +24,11 @@ router.get('/', (req, res) => {
 
 // GET New
 router.get('/new', (req, res) => {
+  // Redirect user to login page if not logged in
+  if (!req.session.currentUser) {
+    return res.redirect('/auth/login');
+  }
+
   res.render('authors/new');
 });
 
@@ -48,6 +53,14 @@ router.get('/:authorId', (req, res) => {
 // POST Create
 router.post('/', (req, res) => {
   // console.log(req.body);
+
+  // Redirect user to login page if not logged in
+  if (!req.session.currentUser) {
+    return res.redirect('/auth/login');
+  }
+
+  // Add currentUser to the request.body for the user/author association
+  req.body.user = req.session.currentUser
 
   // Query DB to create new author
   db.Author.create(req.body, (err, newAuthor) => {

@@ -8,7 +8,11 @@ const authorSchema = new mongoose.Schema({
   articles: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Article'
-  }]
+  }],
+  user: {
+    type:mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 }, {timestamps: true});
 
 

@@ -1,4 +1,5 @@
 module.exports = {
   authors: require('./authorsController'),
-  articles: require('./articlesController')
+  articles: require('./articlesController'),
+  auth: require('./authController'),
 };
