@@ -36,10 +36,10 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// Logging middleware passing our own configuration
-app.use(morgan(':method :url'));
 // Method Override
 app.use(methodOverride('_method'));
+// Logging middleware passing our own configuration
+app.use(morgan(':method :url'));
 
 // -------------------------- ROUTES
 
